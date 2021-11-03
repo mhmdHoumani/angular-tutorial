@@ -1,0 +1,44 @@
+<app-header></app-header>
+<app-login></app-login>
+<a href="#">{{title}}</a><br>
+<button (click)="GetName()">Click me</button>
+<button (click)="PrintNumber(100)">Click number</button><br>
+<button (click)="GetAny('name')">Click any</button>
+<button (click)="GetAny(100)">Click any</button>
+<button (click)="GetAny(15.5)">Click any</button>
+<button (click)="GetAny(true)">Click any</button>
+<br><br>
+<input type="text" #box1 placeholder="Key up Box" (keyup)="GetData(box1.value)"/>
+<input type="text" #box2 placeholder="Key down Box" (keydown)="GetData(box2.value)"/>
+<input type="text" #box3 placeholder="Blur Box" (blur)="GetData(box3.value)"/>
+<input type="text" #box4 placeholder="Input Box" (input)="GetData(box4.value)"/>
+<h3 (mouseover)="GetData('Mouse Over')">Mouse Over</h3>
+<h3 (mouseleave)="GetData('Mouse Leave')">Mouse Leave</h3>
+<br><br>
+<input type="text" name="username" #user placeholder="Enter username">
+<button (click)="GetData(user.value)">Send</button>
+<h2>The username is : {{display}}</h2>
+<br><br>
+<button (click)="Counter('minus')">-</button>
+<h3 class="countHeader">{{count}}</h3>
+<button (click)="Counter('add')">+</button>
+<br><br>
+<!--
+    bind property is more preferable then interpolation!!!
+-->
+<input type="text" value={{name}} disabled={{disable}}><!-- INTERPOLATION WAY--><br>
+<input type="text" [value]=name [disabled]=disable><!-- BIND PROPERTY WAY-->
+<br><br>
+
+<ng-template [ngIf]="color==='red'">
+    <h1 style="color: red;">Red Color</h1>
+</ng-template>
+<ng-template [ngIf]="color==='green'">
+    <h1 style="color: green;">Green Color</h1>
+</ng-template>
+<ng-template [ngIf]="color==='blue'">
+    <h1 style="color: blue;">Blue Color</h1>
+</ng-template>
+<ng-template [ngIf]="color==='yellow'">
+    <h1 style="color: yellow;">Yellow Color</h1>
+</ng-template>
