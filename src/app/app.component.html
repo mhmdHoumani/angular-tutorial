@@ -1,5 +1,5 @@
 <app-header></app-header>
-<app-login></app-login>
+<app-login [item]="count"></app-login>
 <a href="#">{{title}}</a><br>
 <button (click)="GetName()">Click me</button>
 <button (click)="PrintNumber(100)">Click number</button><br>
@@ -8,10 +8,10 @@
 <button (click)="GetAny(15.5)">Click any</button>
 <button (click)="GetAny(true)">Click any</button>
 <br><br>
-<input type="text" #box1 placeholder="Key up Box" (keyup)="GetData(box1.value)"/>
-<input type="text" #box2 placeholder="Key down Box" (keydown)="GetData(box2.value)"/>
-<input type="text" #box3 placeholder="Blur Box" (blur)="GetData(box3.value)"/>
-<input type="text" #box4 placeholder="Input Box" (input)="GetData(box4.value)"/>
+<input type="text" #box1 placeholder="Key up Box" (keyup)="GetData(box1.value)" />
+<input type="text" #box2 placeholder="Key down Box" (keydown)="GetData(box2.value)" />
+<input type="text" #box3 placeholder="Blur Box" (blur)="GetData(box3.value)" />
+<input type="text" #box4 placeholder="Input Box" (input)="GetData(box4.value)" />
 <h3 (mouseover)="GetData('Mouse Over')">Mouse Over</h3>
 <h3 (mouseleave)="GetData('Mouse Leave')">Mouse Leave</h3>
 <br><br>
@@ -31,14 +31,174 @@
 <br><br>
 
 <ng-template [ngIf]="color==='red'">
-    <h1 style="color: red;">Red Color</h1>
+  <h2 style="color: red;">Red Color</h2>
 </ng-template>
 <ng-template [ngIf]="color==='green'">
-    <h1 style="color: green;">Green Color</h1>
+  <h2 style="color: green;">Green Color</h2>
 </ng-template>
 <ng-template [ngIf]="color==='blue'">
-    <h1 style="color: blue;">Blue Color</h1>
+  <h2 style="color: blue;">Blue Color</h2>
 </ng-template>
 <ng-template [ngIf]="color==='yellow'">
-    <h1 style="color: yellow;">Yellow Color</h1>
+  <h2 style="color: yellow;">Yellow Color</h2>
 </ng-template>
+
+<div [ngSwitch]="color">
+  <h1>Switch Case</h1>
+  <h2 *ngSwitchCase="'red'" style="color: red;">Red Color</h2>
+  <h2 *ngSwitchCase="'blue'" style="color: blue;">Blue Color</h2>
+  <h2 *ngSwitchCase="'green'" style="color: green;">Green Color</h2>
+  <h2 *ngSwitchCase="'yellow'" style="color: yellow;">Yellow Color</h2>
+  <h2 *ngSwitchCase="'purple'" style="color: purple;">Purple Color</h2>
+  <h2 *ngSwitchCase="'orange'" style="color: orange;">Orange Color</h2>
+  <h2 *ngSwitchCase="'pink'" style="color: pink;">Pink Color</h2>
+  <h2 *ngSwitchDefault>Default Color</h2>
+</div>
+<br><br>
+<h5 *ngFor='let item of users'>Name: {{item}}</h5>
+<ul *ngFor='let user of usersDetails'>
+  <li>Name: {{user.name}}</li>
+  <li>Email: {{user.email}}</li>
+  <li>Phone: {{user.phone}}</li>
+  <li>
+    Accounts:
+    <ul *ngFor='let account of user.accounts'>
+      <li>{{account}}</li>
+    </ul>
+  </li>
+</ul>
+<br>
+<h1 [style.color]="color" [style.backgroundColor]="bgColor">Style Binding</h1>
+<button (click)="changeColor()">Change Color</button>
+<br> <br> <br>
+<form #basicForm="ngForm" (submit)="GetFormData(basicForm.value)">
+  <input type="text" ngModel name="username" placeholder="Your Username"><br><br>
+  <input type="text" ngModel name="password" placeholder="Your Password"><br><br>
+  <input type="text" ngModel name="name" placeholder="Your Full Name"><br><br>
+  <input type="email" ngModel name="email" placeholder="Your Email Address"><br><br>
+  <input type="submit" value="Submit">
+</form>
+
+<ul>
+  <li>{{userData.username}}</li>
+  <li>{{userData.password}}</li>
+  <li>{{userData.name}}</li>
+  <li>{{userData.email}}</li>
+</ul>
+<br><br>
+<button (click)="ToggleText()">Toggle</button>
+<h2 *ngIf="disable">Toggle this text</h2><br>
+<h1><b>Bootstrap</b></h1>
+<ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
+  <ngb-panel title="Simple">
+    <ng-template ngbPanelContent>
+      Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon
+      officia
+      aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon
+      tempor,
+      sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh
+      helvetica,
+      craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings
+      occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
+      labore sustainable VHS.
+    </ng-template>
+  </ngb-panel>
+  <ngb-panel>
+    <ng-template ngbPanelTitle>
+      <span>&#9733; <b>Fancy</b> title &#9733;</span>
+    </ng-template>
+    <ng-template ngbPanelContent>
+      Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon
+      officia
+      aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon
+      tempor,
+      sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh
+      helvetica,
+      craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings
+      occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
+      labore sustainable VHS.
+    </ng-template>
+  </ngb-panel>
+  <ngb-panel title="Disabled" [disabled]="true">
+    <ng-template ngbPanelContent>
+      Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon
+      officia
+      aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon
+      tempor,
+      sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh
+      helvetica,
+      craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings
+      occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
+      labore sustainable VHS.
+    </ng-template>
+  </ngb-panel>
+</ngb-accordion>
+<p>
+  <ngb-alert [dismissible]="false">
+    <strong>Warning!</strong> Better check yourself, you're not looking too good.
+  </ngb-alert>
+</p>
+<p *ngFor="let alert of alerts">
+  <ngb-alert [type]="alert.type" (closed)="close(alert)">{{ alert.message }}</ngb-alert>
+</p>
+<p>
+  <button type="button" class="btn btn-primary" (click)="reset()">Reset</button>
+</p>
+
+<h1><b>Material UI</b></h1>
+<section>
+  <div class="example-button-row">
+    <button mat-button>Basic</button>
+    <button mat-button color="primary">Primary</button>
+    <button mat-button color="accent">Accent</button>
+    <button mat-button color="warn">Warn</button>
+    <button mat-button disabled>Disabled</button>
+    <a mat-button href="https://www.google.com/" target="_blank">Link</a>
+  </div>
+</section>
+<section>
+  <div class="example-button-row">
+    <button mat-raised-button>Basic</button>
+    <button mat-raised-button color="primary">Primary</button>
+    <button mat-raised-button color="accent">Accent</button>
+    <button mat-raised-button color="warn">Warn</button>
+    <button mat-raised-button disabled>Disabled</button>
+    <a mat-raised-button href="https://www.google.com/" target="_blank">Link</a>
+  </div>
+</section>
+<section>
+  <div class="example-button-row">
+    <div class="example-flex-container">
+      <div class="example-button-container">
+        <button mat-fab color="primary" aria-label="Example icon button with a delete icon">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+      <div class="example-button-container">
+        <button mat-fab color="accent" aria-label="Example icon button with a bookmark icon">
+          <mat-icon>bookmark</mat-icon>
+        </button>
+      </div>
+      <div class="example-button-container">
+        <button mat-fab color="warn" aria-label="Example icon button with a home icon">
+          <mat-icon>home</mat-icon>
+        </button>
+      </div>
+      <div class="example-button-container">
+        <button mat-fab disabled aria-label="Example icon button with a heart icon">
+          <mat-icon>favorite</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+<br><br>
+<input type="text" #task placeholder="Enter a task" style="margin-right: 10px;">
+<button (click)="AddTask(task.value)">Add Task</button>
+<ul *ngFor="let item of tasks">
+  <li>{{item.task}} <button (click)="RemoveTask(item.id)">Remove</button></li>
+</ul>
+<br><br>
+<ul *ngFor="let data of usersDetails">
+  <app-user-details [item]="data"></app-user-details>
+</ul>
