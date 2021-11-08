@@ -1,6 +1,20 @@
-<app-header></app-header>
+<app-header (GetDataEvent)="GetData($event)"></app-header>
+<h2>{{display}}</h2>
 <app-login [item]="count"></app-login>
 <a href="#">{{title}}</a><br>
+<h4>{{title | lowercase}}</h4>
+<h4>{{title | uppercase}}</h4>
+<!--params in pipes-->
+<h4>{{title | slice : 3 : 7}}</h4>
+<!--using two pipes-->
+<h4>{{usersDetails[0] | json | uppercase}}</h4>
+<h4>{{123.4325 | number:'2.3'}}</h4>
+<h4>{{100 | currency : 'USD'}}</h4>
+<!--Custom pipe with params-->
+<h4>{{32 | currency : 'USD'}} will be equal to {{32 | USDtoLBP : 20500 : 'LL'}}</h4>
+<h1> {{'Hello World' | lowercase}}</h1>
+<h4>{{today | date : 'fullDate'}}</h4>
+<h4>{{'capitalize the first letter of each word in this sentence.' | titlecase}}</h4>
 <button (click)="GetName()">Click me</button>
 <button (click)="PrintNumber(100)">Click number</button><br>
 <button (click)="GetAny('name')">Click any</button>
@@ -11,7 +25,8 @@
 <input type="text" #box1 placeholder="Key up Box" (keyup)="GetData(box1.value)" />
 <input type="text" #box2 placeholder="Key down Box" (keydown)="GetData(box2.value)" />
 <input type="text" #box3 placeholder="Blur Box" (blur)="GetData(box3.value)" />
-<input type="text" #box4 placeholder="Input Box" (input)="GetData(box4.value)" />
+<input type="text" #box4 placeholder="Input Box" (input)="GetData(box4.value)" /><br>
+<input type="text" placeholder="Two way binding" [(ngModel)]="display">
 <h3 (mouseover)="GetData('Mouse Over')">Mouse Over</h3>
 <h3 (mouseleave)="GetData('Mouse Leave')">Mouse Leave</h3>
 <br><br>
@@ -23,9 +38,7 @@
 <h3 class="countHeader">{{count}}</h3>
 <button (click)="Counter('add')">+</button>
 <br><br>
-<!--
-    bind property is more preferable then interpolation!!!
--->
+<!--bind property is more preferable then interpolation!!!-->
 <input type="text" value={{name}} disabled={{disable}}><!-- INTERPOLATION WAY--><br>
 <input type="text" [value]=name [disabled]=disable><!-- BIND PROPERTY WAY-->
 <br><br>
@@ -98,8 +111,10 @@
       tempor,
       sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh
       helvetica,
-      craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings
-      occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
+      craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo.
+      Leggings
+      occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them
+      accusamus
       labore sustainable VHS.
     </ng-template>
   </ngb-panel>
@@ -114,8 +129,10 @@
       tempor,
       sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh
       helvetica,
-      craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings
-      occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
+      craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo.
+      Leggings
+      occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them
+      accusamus
       labore sustainable VHS.
     </ng-template>
   </ngb-panel>
@@ -127,8 +144,10 @@
       tempor,
       sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh
       helvetica,
-      craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings
-      occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
+      craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo.
+      Leggings
+      occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them
+      accusamus
       labore sustainable VHS.
     </ng-template>
   </ngb-panel>
@@ -202,3 +221,57 @@
 <ul *ngFor="let data of usersDetails">
   <app-user-details [item]="data"></app-user-details>
 </ul>
+<!--Form using Template File-->
+<h4><b>Template Form</b></h4>
+<form #LoginForm="ngForm" (ngSubmit)="LoginUser(LoginForm.value)">
+  <input type="text" required #username="ngModel" ngModel name="Username" placeholder="Your Username" />
+  <br>
+  <span *ngIf="username.invalid && username.touched" style="color: red;font-weight: 900;">
+    Please Enter a Valid Username
+  </span>
+  <br>
+  <input type="password" required #password="ngModel" ngModel name="Password" minlength="8"
+    placeholder=" Your Password" />
+  <br>
+  <span *ngIf="password.invalid && password.touched" style="color: red;font-weight: 900;">
+    Please Enter a Valid Password (Minimum 8 characters)
+  </span>
+  <br>
+  <input type="text" required #fullName="ngModel" ngModel name="Full Name" placeholder="Your Full Name" />
+  <br>
+  <span *ngIf="fullName.invalid && fullName.touched" style="color: red;font-weight: 900;">
+    Please Enter a Valid Name
+  </span>
+  <br>
+  <input type="email" required #email="ngModel" ngModel name="Email" email placeholder="Your Email Address" />
+  <br>
+  <span *ngIf="email.invalid && email.touched" style="color: red;font-weight: 900;">
+    Please Enter a Valid Email
+  </span>
+  <br>
+  <input type="submit" value="Submit" [disabled]="LoginForm.invalid">
+</form><br>
+<!--Form using Reactive File-->
+<h4><b>Reactive Form</b></h4>
+<form [formGroup]="reactiveForm" (ngSubmit)="ReactiveLogin()">
+  <input type=" text" placeholder="Username" formControlName="username" />
+  <br>
+  <span *ngIf="Username && Username.invalid && Username.touched" style="color: red;font-weight: 900;">
+    Enter a valid Username
+  </span>
+  <br>
+  <input type="password" placeholder="Password" formControlName="password" />
+  <br>
+  <span *ngIf="Password && Password.invalid && Password.touched" style="color: red;font-weight: 900;">
+    Enter a valid Password
+  </span>
+  <br>
+  <input type="email" placeholder="Email" formControlName="email" />
+  <br>
+  <span *ngIf="Email && Email.invalid && Email.touched" style="color: red;font-weight: 900;">
+    Enter a valid Email
+  </span>
+  <br>
+  <input type="submit" value="submit" [disabled]="reactiveForm.invalid" />
+</form>
+<h1 appRedElement>Directive Element</h1>

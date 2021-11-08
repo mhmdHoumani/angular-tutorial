@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { NgForm, FormGroup, FormControl, Validators } from '@angular/forms';
 
 interface Alert {
   type: string;
@@ -12,8 +12,9 @@ interface Alert {
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'angular-tutorial';
-  display = '';
+  title = 'Angular Tutorial';
+  today = Date();
+  display: any;
   flag = 0;
   count = 0;
   disable = true;
@@ -69,7 +70,25 @@ export class AppComponent {
   ];
   alerts: Alert[] = [];
   tasks: any[] = [];
+  reactiveForm = new FormGroup({
+    username: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z]+$')]),
+    password: new FormControl('', [Validators.required, Validators.minLength(8)]),
+    email: new FormControl('', [Validators.required, Validators.email]),
+  });
 
+
+  public get Username() {
+    return this.reactiveForm.get('username');
+  }
+  public get Password() {
+    return this.reactiveForm.get('password');
+  }
+  public get Email() {
+    return this.reactiveForm.get('email');
+  }
+  ReactiveLogin() {
+    console.warn(this.reactiveForm.value);
+  }
   close(alert: Alert) {
     this.alerts.splice(this.alerts.indexOf(alert), 1);
   }
@@ -117,5 +136,8 @@ export class AppComponent {
   }
   RemoveTask(id: number) {
     this.tasks = this.tasks.filter(item => item.id !== id);
+  }
+  LoginUser(item: any) {
+    console.warn(item);
   }
 }

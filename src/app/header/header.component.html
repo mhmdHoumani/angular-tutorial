@@ -8,3 +8,6 @@
     <li><a href="#">Login</a></li>
   </ul>
 </div>
+
+<input type="text" #boxID placeholder="Enter a text">
+<button (click)="GetDataEvent.emit(boxID.value)">Send</button>
